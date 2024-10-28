@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-dark text-white;
+  }
+
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+}
+
+.meteors-container {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.meteor {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  background: linear-gradient(to right, #ffffff, transparent);
+  animation: meteor 5s linear infinite;
+  border-radius: 100%;
+  box-shadow: 0 0 10px #ffffff;
+}
+
+.glow {
+  @apply relative;
+}
+
+.glow::before {
+  @apply content-[''] absolute -inset-[2px] bg-gradient-to-r from-accent to-accent-light rounded-lg blur opacity-75 transition-opacity group-hover:opacity-100;
+}
+
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-accent to-accent-light animate-gradient;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 8s ease infinite;
+}
+
+.star {
+  @apply absolute w-[2px] h-[2px] bg-white rounded-full;
+  animation: twinkle 1s infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@keyframes meteor {
+  0% {
+    transform: rotate(215deg) translateX(0);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(215deg) translateX(-500px);
+    opacity: 0;
+  }
+}
+
+/* Mouse trail effect */
+.cursor-trail {
+  pointer-events: none;
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(to right, #7C3AED, #9F67FF);
+  border-radius: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease;
+  z-index: 9999;
+}
+
+.cursor-trail.active {
+  opacity: 0.6;
+  animation: trail 1s linear forwards;
+}
+
+@keyframes trail {
+  0% {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+  }
+}
